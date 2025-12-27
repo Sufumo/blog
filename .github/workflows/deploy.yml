@@ -43,8 +43,9 @@ jobs:
               env:
                 REPO_OWNER: ${{ github.repository_owner }}
               run: |
-                REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-                BASE_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}/"
+                # REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+                # BASE_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}/"
+                BASE_URL="https://blog.yuzhe.online/"
                 hugo --minify --gc --baseURL "$BASE_URL"
 
             - name: Deploy 🚀
