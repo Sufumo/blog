@@ -40,7 +40,12 @@ jobs:
                   extended: true
 
             - name: Build
-              run: hugo --minify --gc
+              env:
+                REPO_OWNER: ${{ github.repository_owner }}
+              run: |
+                REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+                BASE_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}/"
+                hugo --minify --gc --baseURL "$BASE_URL"
 
             - name: Deploy 🚀
               uses: JamesIves/github-pages-deploy-action@v4
