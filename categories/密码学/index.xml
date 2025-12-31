@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>密码学 on Hugo Theme Stack Starter</title><link>https://blog.yuzhe.online/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/</link><description>Recent content in 密码学 on Hugo Theme Stack Starter</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 31 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.yuzhe.online/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/index.xml" rel="self" type="application/rss+xml"/><item><title>加密算法记录</title><link>https://blog.yuzhe.online/p/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95/</link><pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><guid>https://blog.yuzhe.online/p/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95/</guid><description>&lt;h1 id="简单加密算法"&gt;简单加密算法
+&lt;/h1&gt;&lt;h2 id="凯撒密码caesar-cipher"&gt;凯撒密码（Caesar Cipher）
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;安全性&lt;/strong&gt;：极低&lt;/p&gt;
+&lt;p&gt;将明文中的每一个字母在字母表中向后（或向前）移动固定数量的位置。&lt;/p&gt;
+&lt;p&gt;如果将字母 $A-Z$ 对应为数字 $0-25$，那么加密和解密的逻辑可以用模运算（Modulo）表示：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加密：$E_n(x) = (x + n) \mod 26$&lt;/li&gt;
+&lt;li&gt;解密：$D_n(x) = (x - n) \mod 26$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中 $x$ 是明文字母的编号，$n$ 是位移的偏移量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：编程入门题目&lt;/p&gt;
+&lt;h2 id="rot13rotate-by-13-places"&gt;ROT13（Rotate by 13 places）
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;安全性&lt;/strong&gt;：极低&lt;/p&gt;
+&lt;p&gt;简单的位移密码，为凯撒密码的一个特殊变体。加密与解密使用相同的逻辑，具有对称性。&lt;/p&gt;
+&lt;p&gt;ROT13 的规则非常直观：将英文字母表中的每个字母向后移动 13 位。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;前半部分字母 (A-M)：向后移动 13 位，变为后半部分的对应字母（如 $A \to N$, $B \to O$）。&lt;/li&gt;
+&lt;li&gt;后半部分字母 (N-Z)：向后移动 13 位，绕回字母表开头（如 $N \to A$, $O \to B$）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：编程入门题目&lt;/p&gt;
+&lt;h1 id="复杂加密算法"&gt;复杂加密算法
+&lt;/h1&gt;&lt;h2 id="异或运算xor"&gt;异或运算（XOR）
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;安全性&lt;/strong&gt;：中&lt;/p&gt;
+&lt;p&gt;根据一个数字（原文）在通过两次与同一数字（密钥）进行异或运算后，依然能得到原来的数字的特性，以及计算机对所有数据都以二进制的方式进行存储的原理，诞生的加密方式。因其为硬件层级的位运算，速度极快，效率极高。且加解密可以使用相同的逻辑，XOR 是现代高级加密算法（如 AES 和 DES）的核心组件。&lt;/p&gt;
+&lt;p&gt;如果只是简单地用一个短密钥（如 12345）重复对一段长文本进行 XOR 加密，其安全性甚至不如凯撒密码：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;已知明文攻击&lt;/strong&gt;：由于 $A \oplus B = C$ 推导出 $A \oplus C = B$。如果你知道一小段明文（比如文件的开头通常是固定的格式）及其对应的密文，你就能瞬间算出密钥。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重复密钥攻击&lt;/strong&gt;：如果你用同一个密钥加密了两段不同的明文（$C1 = P1 \oplus K$，$C2 = P2 \oplus K$），那么将两个密文进行 XOR 运算：$C1 \oplus C2 = P1 \oplus P2$。这会完全抵消掉密钥，暴露明文之间的统计特征，通过词频分析即可破解。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;模式暴露&lt;/strong&gt;：简单的 XOR 无法打乱数据的统计特征。如果加密图片，图片的轮廓往往在密图中依然清晰可见。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：部分小型游戏的简单加密&lt;/p&gt;
+&lt;h2 id="aesadvanced-encryption-standard"&gt;AES（Advanced Encryption Standard）
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;安全性&lt;/strong&gt;：高&lt;/p&gt;
+&lt;p&gt;最常见的对称加密算法，加密和解密使用相同的密钥，为分组密码，分组长度只能是128位，密钥的长度可使用128位、192位或256位，可进行多轮加密，加密轮数一般随密钥长度递增，安全性也会随之上升。&lt;/p&gt;
+&lt;p&gt;AES加密会将明文和密文转化为矩阵进行运算。通过字节代换（查表操作）、行移位（逐行移位）、列混合（矩阵运算）、轮密钥加（逐位异或），并重复多轮进行加密。同理，使用逆操作进行解密。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：微信、微信小程序&lt;/p&gt;
+&lt;h2 id="desdata-encryption-standard"&gt;DES（Data Encryption Standard）
+&lt;/h2&gt;&lt;p&gt;略&lt;/p&gt;</description></item><item><title>字符编码方式记录</title><link>https://blog.yuzhe.online/p/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95/</link><pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><guid>https://blog.yuzhe.online/p/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95/</guid><description>&lt;h1 id="通用字符编码"&gt;通用字符编码
+&lt;/h1&gt;&lt;h2 id="ascii"&gt;ASCII
+&lt;/h2&gt;&lt;p&gt;诞生于 20 世纪 60 年代，最基础的单字节编码，主要用于显示现代英语。&lt;/p&gt;
+&lt;p&gt;使用 7 位二进制来表示一个字符，共能表示 128 个字符（包括大小写字母、数字和控制字符）。&lt;/p&gt;
+&lt;p&gt;无法表示中文、日文等非英语国家的文字。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：底层计算机系统与协议&lt;/p&gt;
+&lt;h2 id="iso-8859-1latin-1"&gt;iso-8859-1（Latin-1）
+&lt;/h2&gt;&lt;p&gt;前 128 个字符（0x00 - 0x7F）与 ASCII 完全一致，涵盖了基础英文、数字和控制字符。利用了字节中原本闲置的最高位（第 8 位），将编码范围从 ASCII 的 128 个扩展到了 256 个（0x00 - 0xFF）。&lt;/p&gt;
+&lt;p&gt;在早期的 HTTP 1.1 协议规范中，如果没有明确指定字符集，默认就会被认为是 ISO-8859-1。随着 UTF-8 的全面普及，ISO-8859-1 已经逐渐退居二线，主要存在于旧的遗留系统、早期的电子邮件附件或特定的数据库配置中。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：早期互联网&lt;/p&gt;
+&lt;h2 id="unicode"&gt;Unicode
+&lt;/h2&gt;&lt;p&gt;为了解决各国编码不通导致的“乱码”问题而设计的万国码，全球统一的“字符集”。&lt;/p&gt;
+&lt;p&gt;为世界上每一种语言的每一个字符都设定了唯一的码点。&lt;/p&gt;
+&lt;p&gt;Unicode 本身只是一张“清单”，规定了某个字符对应哪个数字，但并没有规定这个数字在计算机里具体怎么存（即没有规定占用几个字节）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：全球化软件&lt;/p&gt;
+&lt;h2 id="utf-8"&gt;UTF-8
+&lt;/h2&gt;&lt;p&gt;最流行的“实现方式”，是 Unicode 的一种针对传输和存储的压缩优化实现。&lt;/p&gt;
+&lt;p&gt;UTF-8是一种变长编码。对于简单的英文字母，它只用 1 个字节（完全兼容 ASCII）。对于汉字，通常使用 3 个字节。&lt;/p&gt;
+&lt;p&gt;UTF-8在节约空间的同时，解决了全球字符的显示问题，是目前互联网上使用最广泛的编码方式。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：现代互联网网页、各类编程语言默认编码&lt;/p&gt;
+&lt;h1 id="中国字符编码"&gt;中国字符编码
+&lt;/h1&gt;&lt;h2 id="gb2312"&gt;GB2312
+&lt;/h2&gt;&lt;p&gt;1980 年发布，是中国制定的第一个汉字编码标准。为双字节编码。为了兼容 ASCII，它规定：如果一个字节的值小于 127，则按 ASCII 处理；如果大于 127，则将连续的两个字节组合起来表示一个汉字。&lt;/p&gt;
+&lt;p&gt;包含 6763 个汉字，分为一级汉字（常用）和二级汉字（不常用）。此外还包含拉丁字母、希腊字母、日文假名及数学符号等。由于收录字数较少，许多人名、地名、古籍中的生僻字以及繁体字无法显示。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：早期中文操作系统与软件&lt;/p&gt;
+&lt;h2 id="gbk"&gt;GBK
+&lt;/h2&gt;&lt;p&gt;1995 年发布，“K”代表“扩展”。为解决 GB2312 字数不足的问题而制定，且完全向下兼容 GB2312。&lt;/p&gt;
+&lt;p&gt;GBK 利用了 GB2312 中未使用的编码空间，极大地扩充了字符量。 包含 21003 个汉字，涵盖了绝大多数生僻字、繁体字，甚至收录了部分日文和韩文中的汉字。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：Windows 中文版长期默认编码&lt;/p&gt;
+&lt;h2 id="gb18030"&gt;GB18030
+&lt;/h2&gt;&lt;p&gt;2000 年发布，2022 年更新，不仅包含前两者的所有字符，还增加了少数民族文字，并且是强制性的国家标准，在逻辑上兼容 Unicode。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：中国大陆政府、金融、电信等强合规行业系统&lt;/p&gt;
+&lt;h1 id="日本字符编码"&gt;日本字符编码
+&lt;/h1&gt;&lt;h2 id="shift-jis"&gt;Shift-JIS
+&lt;/h2&gt;&lt;p&gt;由微软等公司开发。利用了 ASCII 码中未使用的空间来存放日文，不需要转义序列，曾是 Windows 系统在日本的主流编码。&lt;/p&gt;
+&lt;p&gt;Shift-JIS 是一种变长编码，根据字符的不同使用不同长度的字节：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;单字节&lt;/strong&gt;：完全兼容 ASCII 码，包含半角假名，范围通常在 0xA1 到 0xDF 之间。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;双字节&lt;/strong&gt;：用于表示日文汉字和全角假名。第一字节（高位字节）通常在 0x81-0x9F 或 0xE0-0xFC 范围内。第二字节（低位字节）则避开了某些控制字符位，确保了数据传输的稳定性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：日本本地 Windows 软件与网页&lt;/p&gt;</description></item><item><title>编码方式记录</title><link>https://blog.yuzhe.online/p/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95/</link><pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><guid>https://blog.yuzhe.online/p/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E8%AE%B0%E5%BD%95/</guid><description>&lt;h2 id="hex-编码"&gt;Hex 编码
+&lt;/h2&gt;&lt;p&gt;Hex 编码常被称为 Base16 编码。是计算机科学中最基础、最直观的数据表示方式之一，主要用于将二进制数据转换为人类可读的文本格式。核心逻辑是将每一个字节拆分为两个4位的部分，然后用十六进制数字来表示每一个部分。&lt;/p&gt;
+&lt;p&gt;Hex 是查看内存、分析二进制文件（如图片、可执行程序）的首选。通过 Hex 视图，可以一眼看出文件的魔数（如 PNG 文件开头总是 89 50 4E 47）。&lt;/p&gt;
+&lt;p&gt;由于每 1 个字节的数据需要 2 个字符来表示，Hex 编码会使数据体积膨胀 100%。相比之下，Base64 的体积膨胀仅为约 33%。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：二进制分析&lt;/p&gt;
+&lt;h2 id="base64-编码"&gt;base64 编码
+&lt;/h2&gt;&lt;p&gt;base64 是基于64个可打印的字符来表示二进制的数据的一种方法。以3个字节（24位）为一组，每组会被划分为4组（每组6位，表示64个字符）并在每组前补位两个0，变为每组8位。最后通过对照 base64 表取值得到最终的编码内容。因将6位的二进制数据以8位表示，原文的体积膨胀约为 33%。&lt;/p&gt;
+&lt;p&gt;如果分组后的字节数不位3的倍数，则对最后余数的部分不满6位的组用0补位，没有数据的组使用 = 补位。因此编码结果末尾可能存在 0～2 个等于号。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用场景&lt;/strong&gt;：常见数据传输&lt;/p&gt;</description></item></channel></rss>

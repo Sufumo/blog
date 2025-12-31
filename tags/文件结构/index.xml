@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>文件结构 on Hugo Theme Stack Starter</title><link>https://blog.yuzhe.online/tags/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/</link><description>Recent content in 文件结构 on Hugo Theme Stack Starter</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 31 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.yuzhe.online/tags/%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml"/><item><title>常见文件格式与二进制结构</title><link>https://blog.yuzhe.online/p/%E5%B8%B8%E8%A7%81%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BB%93%E6%9E%84/</link><pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate><guid>https://blog.yuzhe.online/p/%E5%B8%B8%E8%A7%81%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E4%B8%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BB%93%E6%9E%84/</guid><description>&lt;h1 id="图片文件"&gt;图片文件
+&lt;/h1&gt;&lt;h2 id="png"&gt;PNG
+&lt;/h2&gt;&lt;p&gt;PNG 是一种&lt;strong&gt;无损压缩格式&lt;/strong&gt;。其魔数为 &lt;code&gt;89 50 4E 47 0D 0A 1A 0A&lt;/code&gt;。各字节含义为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;89&lt;/code&gt;：确保文件不会被旧式文本处理程序误读为文本&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;50 4E 47&lt;/code&gt;：ASCII “PNG”&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0D 0A&lt;/code&gt;：CRLF 换行符，用于跨平台兼容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;1A&lt;/code&gt;：EOF 控制字符&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;0A&lt;/code&gt;：再一个换行符&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其文件内容由若干 IHDR块 (长度 4字节 + 类型 4字节 + 数据 + CRC 4字节) 组成，存储图片宽、高、位深、颜色类型等关键信息。&lt;/p&gt;
+&lt;h2 id="jpgjpeg"&gt;JPG/JPEG
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;JPG 和 JPEG 没有任何技术上的区别&lt;/strong&gt;。它们指向的是同一种文件格式，其内部结构、压缩算法和图像质量完全一致。&lt;/p&gt;
+&lt;p&gt;在早期的 &lt;strong&gt;MS-DOS&lt;/strong&gt; 和 &lt;strong&gt;Windows 3.1&lt;/strong&gt; 操作系统中，文件系统（FAT16）对后缀名有严格的 &lt;strong&gt;&amp;ldquo;8.3&amp;rdquo; 限制&lt;/strong&gt;：文件名最多 8 个字符，后缀名最多 &lt;strong&gt;3 个字符&lt;/strong&gt;。因此，为了在 Windows 上运行，&lt;code&gt;.jpeg&lt;/code&gt; 必须缩减为 &lt;code&gt;.jpg&lt;/code&gt;。而当时的 &lt;strong&gt;Macintosh (Mac)&lt;/strong&gt; 和 &lt;strong&gt;UNIX&lt;/strong&gt; 系统没有这个限制，所以它们一直使用 &lt;code&gt;.jpeg&lt;/code&gt; 后缀。随着 Windows 的升级（从 Windows 95 开始支持长文件名），这种限制早已消失。目前 &lt;code&gt;.jpg&lt;/code&gt; 在 Windows 用户中更常见，而 &lt;code&gt;.jpeg&lt;/code&gt; 在 Linux 和 Web 开发中也很流行。&lt;/p&gt;
+&lt;p&gt;两者的魔数也完全相同，文件开头与结尾各有一个。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-scss" data-lang="scss"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;开始标记&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;SOI&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nd"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;FF&lt;/span&gt; &lt;span class="nt"&gt;D8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;结束标记&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;EOI&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nd"&gt;:&lt;/span&gt; &lt;span class="nt"&gt;FF&lt;/span&gt; &lt;span class="nt"&gt;D9&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;JPEG / JPG 是基于段结构的压缩格式，每段以 &lt;code&gt;0xFF&lt;/code&gt; + 类型标识开始，例如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FF E0&lt;/code&gt;：APP0 段（通常包含 JFIF 信息）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FF DB&lt;/code&gt;：DQT 段（量化表）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FF C0&lt;/code&gt;：SOF0 段（图像帧信息，宽高、颜色通道）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="webp"&gt;WEBP
+&lt;/h2&gt;&lt;p&gt;Webp 是 Google 开发的图片格式，在现代互联网中十分常见。其魔数为 &lt;code&gt;52 49 46 46 XX XX XX XX 57 45 42 50&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;其文件体段结构（12字节）包含三部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;前 4 字节&lt;/strong&gt;：&lt;code&gt;RIFF&lt;/code&gt;（参考 RIFF 容器格式）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;接下来的 4 字节&lt;/strong&gt;：文件大小（小端序）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;再接 4 字节&lt;/strong&gt;：&lt;code&gt;WEBP&lt;/code&gt; 标识 WebP 文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="gif"&gt;GIF
+&lt;/h2&gt;&lt;p&gt;一种动态图片格式，其魔数为ASCII码的 &lt;code&gt;GIF87a&lt;/code&gt; 或 &lt;code&gt;GIF89a&lt;/code&gt; 区分不同的版本。&lt;/p&gt;
+&lt;p&gt;其文件体由逐帧图像+压缩数据块组成，具体包含三个组成部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Logical Screen Descriptor&lt;/strong&gt;：逻辑屏幕描述符，7字节。包含宽度、高度、全局调色板标识、颜色深度&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Image Descriptor&lt;/strong&gt;：每帧的起始信息&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;数据块&lt;/strong&gt;：LZW 压缩的图像数据和可选扩展块（如注释、动画控制等）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>
